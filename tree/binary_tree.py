@@ -82,6 +82,16 @@ def post_order_traversal_non_recursive(root):
             print(node.val)
 
 
+def output_binary_tree_by_pre_and_in_order(preorder, inorder):
+    if not preorder:
+        return
+    root = TreeNode(preorder[0])
+    index = inorder.index(root.val)
+    root.left = output_binary_tree_by_pre_and_in_order(preorder[1:index+1], inorder[:index])
+    root.right = output_binary_tree_by_pre_and_in_order(preorder[index+1:], inorder[index+1:])
+    return root
+
+
 
 t4 = TreeNode(4)
 t5 = TreeNode(5)
@@ -91,4 +101,5 @@ t2 = TreeNode(2, t4, t5)
 t3 = TreeNode(3, t6, t7)
 t1 = TreeNode(1, t2, t3)
 
-post_order_traversal_non_recursive(t1)
+root = output_binary_tree_by_pre_and_in_order([1,2,4,5,3,6,7], [4,2,5,1,6,3,7])
+post_order_traversal(root)
